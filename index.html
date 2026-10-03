@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Boyfriend Privilege Wheel</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --navy: #07182f;
+    --navy2: #0d2748;
+    --gold: #c9a45c;
+    --gold2: #e8d19b;
+    --cream: #f5f0e4;
+    --white: #ffffff;
+}
+
+body {
+    min-height: 100vh;
+    background:
+        radial-gradient(
+            circle at 20% 20%,
+            rgba(201,164,92,.12),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 80% 80%,
+            rgba(201,164,92,.08),
+            transparent 30%
+        ),
+        var(--navy);
+
+    color: var(--cream);
+    font-family: Georgia, "Times New Roman", serif;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    overflow-x: hidden;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+
+    background-image:
+        radial-gradient(
+            circle,
+            rgba(255,255,255,.5) 1px,
+            transparent 1px
+        );
+
+    background-size: 100px 100px;
+    opacity: .15;
+
+    pointer-events: none;
+}
+
+.container {
+    width: 100%;
+    max-width: 900px;
+
+    padding: 35px 20px;
+
+    text-align: center;
+}
+
+.department {
+    color: var(--gold);
+    font-size: 11px;
+    letter-spacing: 4px;
+    margin-bottom: 18px;
+}
+
+h1 {
+    font-size: clamp(32px, 6vw, 58px);
+    letter-spacing: 4px;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    color: var(--gold2);
+    letter-spacing: 2px;
+    font-size: 13px;
+    margin-bottom: 35px;
+}
+
+.case-box {
+    border: 1px solid rgba(201,164,92,.45);
+    background: rgba(255,255,255,.035);
+
+    padding: 35px 25px;
+
+    position: relative;
+}
+
+.case-box::before {
+    content: "OFFICIAL BOYFRIEND PRIVILEGE DIVISION";
+
+    position: absolute;
+    top: -9px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    background: var(--navy);
+
+    padding: 0 12px;
+
+    color: var(--gold);
+
+    font-size: 9px;
+    letter-spacing: 2px;
+
+    white-space: nowrap;
+}
+
+/* =========================
+   WHEEL
+========================= */
+
+.wheel-wrapper {
+    position: relative;
+
+    width: min(430px, 90vw);
+    aspect-ratio: 1;
+
+    margin: 30px auto;
+}
+
+#wheel {
+    width: 100%;
+    height: 100%;
+
+    border-radius: 50%;
+
+    border: 8px solid var(--gold);
+
+    box-shadow:
+        0 0 0 4px var(--navy),
+        0 0 35px rgba(201,164,92,.2);
+
+    transition:
+        transform 5s cubic-bezier(.12,.72,.16,1);
+
+    background: var(--navy);
+}
+
+.pointer {
+    position: absolute;
+
+    top: -18px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    width: 0;
+    height: 0;
+
+    border-left: 17px solid transparent;
+    border-right: 17px solid transparent;
+    border-top: 35px solid var(--gold);
+
+    z-index: 10;
+
+    filter: drop-shadow(
+        0 3px 3px rgba(0,0,0,.5)
+    );
+}
+
+.center-button {
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+
+    width: 90px;
+    height: 90px;
+
+    border-radius: 50%;
+
+    background: var(--navy);
+
+    border: 3px solid var(--gold);
+
+    color: var(--gold2);
+
+    font-family: Georgia, serif;
+
+    font-size: 13px;
+
+    letter-spacing: 2px;
+
+    cursor: pointer;
+
+    z-index: 5;
+
+    transition: .2s;
+}
+
+.center-button:hover {
+    background: var(--navy2);
+    transform: translate(-50%, -50%) scale(1.05);
+}
+
+.center-button:disabled {
+    opacity: .6;
+    cursor: not-allowed;
+}
+
+/* =========================
+   RESULT
+========================= */
+
+.result {
+    min-height: 100px;
+
+    margin-top: 25px;
+
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: center;
+}
+
+.result-label {
+    color: var(--gold);
+    font-size: 10px;
+    letter-spacing: 3px;
+
+    margin-bottom: 10px;
+}
+
+.result-title {
+    color: white;
+
+    font-size: clamp(24px, 4vw, 36px);
+
+    margin-bottom: 8px;
+}
+
+.result-description {
+    color: #c7ccd5;
+
+    max-width: 600px;
+
+    line-height: 1.6;
+
+    font-size: 14px;
+}
+
+.special {
+    color: var(--gold2);
+
+    animation: glow 1.2s infinite alternate;
+}
+
+@keyframes glow {
+
+    from {
+        text-shadow:
+            0 0 5px rgba(232,209,155,.2);
+    }
+
+    to {
+        text-shadow:
+            0 0 20px rgba(232,209,155,.8);
+    }
+}
+
+.footer {
+    margin-top: 25px;
+
+    color: #8490a1;
+
+    font-size: 10px;
+
+    letter-spacing: 2px;
+}
+
+@media(max-width:600px) {
+
+    .case-box {
+        padding: 30px 10px;
+    }
+
+    .case-box::before {
+        font-size: 7px;
+    }
+
+    .wheel-wrapper {
+        width: 90vw;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="department">
+        SUNSHINE DEPARTMENT OF LOVE & AFFAIRS™
+    </div>
+
+    <h1>
+        BOYFRIEND<br>
+        PRIVILEGE WHEEL
+    </h1>
+
+    <div class="subtitle">
+        Authorized for Shashwat Kapoor
+    </div>
+
+    <div class="case-box">
+
+        <div class="wheel-wrapper">
+
+            <div class="pointer"></div>
+
+            <canvas id="wheel"></canvas>
+
+            <button
+                class="center-button"
+                id="spinButton"
+                onclick="spinWheel()">
+                SPIN
+            </button>
+
+        </div>
+
+        <div class="result">
+
+            <div class="result-label">
+                CURRENT AUTHORIZATION
+            </div>
+
+            <div
+                class="result-title"
+                id="resultTitle">
+                Awaiting Spin...
+            </div>
+
+            <div
+                class="result-description"
+                id="resultDescription">
+                Spin the wheel to discover your
+                authorized boyfriend privilege.
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="footer">
+        LICENSE HOLDER: SHASHWAT KAPOOR
+        ★
+        LICENSE STATUS: PERMANENT
+    </div>
+
+</div>
+
+
+<script>
+
+/* =====================================
+   WHEEL DATA
+===================================== */
+
+const prizes = [
+
+    {
+        title: "EMERGENCY BEAR HUG",
+        description:
+        "One ridiculously long hug. No time limit."
+    },
+
+    {
+        title: "KISS VOUCHER",
+        description:
+        "One kiss of your choice. Terms intentionally unspecified."
+    },
+
+    {
+        title: "YOUR CHOICE",
+        description:
+        "You choose what we watch tonight."
+    },
+
+    {
+        title: "TREAT AUTHORIZATION",
+        description:
+        "Sunshine owes you your favourite snack or treat."
+    },
+
+    {
+        title: "UNLIMITED SUNSHINE TIME",
+        description:
+        "One guilt-free call, date or uninterrupted chat session."
+    },
+
+    {
+        title: "PREMIUM CUDDLE PRIVILEGE",
+        description:
+        "One premium cuddle session with your Sunshine."
+    },
+
+    {
+        title: "MYSTERY REWARD",
+        description:
+        "The reward will remain classified until redemption."
+    },
+
+    {
+        title: "BOYFRIEND'S CHOICE",
+        description:
+        "You get absolute decision-making power for one activity."
+    }
+
+];
+
+
+/* =====================================
+   CANVAS SETUP
+===================================== */
+
+const canvas =
+    document.getElementById("wheel");
+
+const ctx =
+    canvas.getContext("2d");
+
+const size = 700;
+
+canvas.width = size;
+canvas.height = size;
+
+const center = size / 2;
+
+const radius = size / 2 - 8;
+
+const slice =
+    (Math.PI * 2) / prizes.length;
+
+
+/* =====================================
+   DRAW WHEEL
+===================================== */
+
+function drawWheel() {
+
+    ctx.clearRect(
+        0,
+        0,
+        size,
+        size
+    );
+
+    const colors = [
+        "#102b4b",
+        "#1a3a5d"
+    ];
+
+    prizes.forEach(
+        (prize, index) => {
+
+            const start =
+                index * slice;
+
+            const end =
+                start + slice;
+
+            ctx.beginPath();
+
+            ctx.moveTo(
+                center,
+                center
+            );
+
+            ctx.arc(
+                center,
+                center,
+                radius,
+                start,
+                end
+            );
+
+            ctx.closePath();
+
+            ctx.fillStyle =
+                colors[index % 2];
+
+            ctx.fill();
+
+            ctx.strokeStyle =
+                "#c9a45c";
+
+            ctx.lineWidth = 2;
+
+            ctx.stroke();
+
+
+            /* TEXT */
+
+            ctx.save();
+
+            ctx.translate(
+                center,
+                center
+            );
+
+            ctx.rotate(
+                start +
+                slice / 2
+            );
+
+            ctx.textAlign =
+                "right";
+
+            ctx.fillStyle =
+                "#f5f0e4";
+
+            ctx.font =
+                "bold 18px Georgia";
+
+            const words =
+                prize.title.split(" ");
+
+            let line = "";
+
+            let y = -5;
+
+            words.forEach(
+                (word, i) => {
+
+                    const test =
+                        line +
+                        word +
+                        " ";
+
+                    if (
+                        ctx.measureText(test)
+                        .width > 210
+                    ) {
+
+                        ctx.fillText(
+                            line,
+                            radius - 25,
+                            y
+                        );
+
+                        line =
+                            word + " ";
+
+                        y += 22;
+
+                    } else {
+
+                        line = test;
+
+                    }
+
+                }
+            );
+
+            ctx.fillText(
+                line,
+                radius - 25,
+                y
+            );
+
+            ctx.restore();
+
+        }
+    );
+}
+
+drawWheel();
+
+
+/* =====================================
+   SPIN LOGIC
+===================================== */
+
+let currentRotation = 0;
+
+let spinning = false;
+
+
+function spinWheel() {
+
+    if (spinning) return;
+
+    spinning = true;
+
+    const button =
+        document.getElementById(
+            "spinButton"
+        );
+
+    button.disabled = true;
+
+    button.textContent = "...";
+
+
+    /*
+    Pick random prize
+    */
+
+    const selectedIndex =
+        Math.floor(
+            Math.random() *
+            prizes.length
+        );
+
+
+    /*
+    Each segment has equal size.
+
+    We rotate the wheel so that
+    the selected segment lands
+    under the pointer.
+    */
+
+    const segmentCenter =
+        selectedIndex * slice +
+        slice / 2;
+
+    const extraSpins =
+        5 + Math.floor(
+            Math.random() * 3
+        );
+
+    const targetRotation =
+        (
+            extraSpins *
+            Math.PI * 2
+        ) +
+        (
+            Math.PI * 1.5
+            -
+            segmentCenter
+        );
+
+    currentRotation +=
+        targetRotation;
+
+
+    canvas.style.transform =
+        `rotate(${currentRotation}rad)`;
+
+
+    setTimeout(() => {
+
+        showResult(
+            selectedIndex
+        );
+
+        spinning = false;
+
+        button.disabled = false;
+
+        button.textContent = "SPIN";
+
+    }, 5200);
+
+}
+
+
+/* =====================================
+   RESULT
+===================================== */
+
+function showResult(index) {
+
+    const prize =
+        prizes[index];
+
+    const title =
+        document.getElementById(
+            "resultTitle"
+        );
+
+    const description =
+        document.getElementById(
+            "resultDescription"
+        );
+
+
+    title.textContent =
+        prize.title;
+
+    description.textContent =
+        prize.description;
+
+
+    if (
+        prize.title ===
+        "MYSTERY REWARD"
+    ) {
+
+        title.classList.add(
+            "special"
+        );
+
+    } else {
+
+        title.classList.remove(
+            "special"
+        );
+
+    }
+
+}
+
+</script>
+
+</body>
+</html>
